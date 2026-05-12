@@ -1,0 +1,16 @@
+# Obsidian
+.obsidian/workspace*
+.obsidian/cache
+.trash/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Raw sources — private inputs, never publish
+raw/
