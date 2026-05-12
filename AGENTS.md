@@ -283,6 +283,23 @@ These are evolving — update this section as workflow preferences emerge.
 
 Load these on-demand via the `skill` tool, not preemptively.
 
+### 8.1 External consumption: the `llm-wiki` skill
+
+This vault is registered with the `llm-wiki` skill (in `~/.config/opencode/skills/llm-wiki/registry.md` as `sap-vault`). When an external agent invokes that skill on an SAP topic, the workflow is:
+
+1. Skill resolves the vault by trying registered candidate paths in order.
+2. Skill reads **this `AGENTS.md`** as the authoritative operating contract.
+3. Skill reads `index.md` (see §5) to discover pages.
+4. Skill reads relevant pages, follows wikilinks one hop, respects `status` and `sap_release` tags from frontmatter (see §3.1).
+5. Skill synthesizes an answer with wikilink citations, flags gaps, and offers to file findings back — but **never edits this vault from outside**. Edits happen inside the vault per §4.
+
+Sections that are **load-bearing for external agents**:
+- §2 (directory layout) — so the skill knows where to look.
+- §3 (page conventions, especially §3.1 frontmatter) — so the skill can interpret status/version/source metadata correctly.
+- §5 (index.md format) — so the skill can navigate.
+
+Changes to those three sections may break external consumption. Update the skill's `registry.md` triggers if domain coverage expands.
+
 ---
 
 ## 9. What the LLM should NOT do
