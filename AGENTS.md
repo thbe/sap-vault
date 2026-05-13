@@ -41,7 +41,7 @@ wiki/                 # LLM-OWNED. Generated, interlinked markdown.
   topics/             # Cross-cutting: performance, security, testing, migration
 
 templates/            # Page templates (reference, not active wiki content)
-index.md              # Catalog of all wiki pages (LLM-maintained)
+_Index.md                         # Catalog of all wiki pages (LLM-maintained)
 log.md                # Append-only chronological activity log
 README.md             # Brief orientation for humans
 AGENTS.md             # This file
@@ -49,7 +49,7 @@ AGENTS.md             # This file
 
 **Rules:**
 - LLM **never** writes to `raw/`. Only the human adds sources there.
-- LLM **fully owns** `wiki/`, `index.md`, `log.md`. Edits freely.
+- LLM **fully owns** `wiki/`, `_Index.md`, `log.md`. Edits freely.
 - `templates/` is reference material — copy from it, don't modify in flight.
 
 ---
@@ -164,7 +164,7 @@ When the human points to a file in `raw/` (or pastes content) and says "ingest t
    > [[sources/old]] claims X; [[sources/new]] claims Y. Reason: ...
 6. **Create** new entity/concept/pattern pages as needed (start as `status: stub` if thin).
 7. **Add** new code samples to `wiki/snippets/` if reusable.
-8. **Update** `index.md` (new pages added, summaries refreshed if needed).
+8. **Update** `_Index.md` (new pages added, summaries refreshed if needed).
 9. **Append** entry to `log.md` (see §6).
 10. **Report** to the human: pages created, pages updated, contradictions found, suggested follow-ups.
 
@@ -172,7 +172,7 @@ A typical ingest touches 5-15 wiki pages. That's the point.
 
 ### 4.2 QUERY — answering a question
 
-1. Read `index.md` first to find candidate pages.
+1. Read `_Index.md` first to find candidate pages.
 2. Read the relevant pages (and follow wikilinks one hop if needed).
 3. Synthesize an answer with **inline wikilink citations** to the wiki pages used.
 4. If the answer reveals a gap (page missing, contradiction, stale info) — note it and offer to fix.
@@ -188,7 +188,7 @@ When the human says "lint the wiki":
 3. **Contradictions**: scan for `> [!warning] Contradiction` callouts and surface unresolved ones.
 4. **Stale releases**: pages tagged with old releases that may need updating.
 5. **Missing cross-refs**: if page A mentions concept B by name but doesn't link, suggest the link.
-6. **Index drift**: pages that exist but aren't in `index.md`, or vice versa.
+6. **Index drift**: pages that exist but aren't in `_Index.md`, or vice versa.
 7. **Naming inconsistencies**: same SAP object referenced under different filenames.
 8. **Suggested research**: gaps where a web search or new source would help.
 
@@ -200,7 +200,7 @@ When pages get long, split them. When categories get crowded, subdivide. Always 
 
 ---
 
-## 5. index.md format
+## 5. _Index.md format
 
 Grouped by category. Each entry: `- [[path/to/page|Title]] — one-line summary [status]`.
 
@@ -289,7 +289,7 @@ This vault is registered with the `llm-wiki` skill (in `~/.config/opencode/skill
 
 1. Skill resolves the vault by trying registered candidate paths in order.
 2. Skill reads **this `AGENTS.md`** as the authoritative operating contract.
-3. Skill reads `index.md` (see §5) to discover pages.
+3. Skill reads `_Index.md` (see §5) to discover pages.
 4. Skill reads relevant pages, follows wikilinks one hop, respects `status` and `sap_release` tags from frontmatter (see §3.1).
 5. Skill synthesizes an answer with wikilink citations, flags gaps, and offers to file findings back — but **never edits this vault from outside**. Edits happen inside the vault per §4.
 

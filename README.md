@@ -6,8 +6,8 @@ A personal, LLM-maintained knowledge base for **ABAP and SAP Fiori/UI5 developme
 
 - **Drop sources** into `raw/` (articles, PDFs, code samples, screenshots).
 - **Talk to the LLM agent** — say "ingest this" pointing at a file, or ask any SAP/Fiori question.
-- **Browse the wiki** in Obsidian — start at [[index]] or open the graph view.
-- The LLM owns `wiki/`, `index.md`, and `log.md`. The human owns `raw/`.
+- **Browse the wiki** in Obsidian — start at [[_Index]] or open the graph view.
+- The LLM owns `wiki/`, `_Index.md`, and `log.md`. The human owns `raw/`.
 
 The full operating contract lives in [AGENTS.md](AGENTS.md). Read that first.
 
@@ -18,7 +18,7 @@ The full operating contract lives in [AGENTS.md](AGENTS.md). Read that first.
 | `raw/` | Human | Immutable source material |
 | `wiki/` | LLM | Generated, interlinked knowledge pages |
 | `templates/` | Human | Reference page templates |
-| `index.md` | LLM | Catalog of all wiki pages |
+| `_Index.md` | LLM | Catalog of all wiki pages |
 | `log.md` | LLM | Chronological activity log |
 | `AGENTS.md` | Both | Schema and operating manual |
 
