@@ -3,7 +3,7 @@ title: "Multi-Site Repo Architecture (Three-Tier)"
 type: pattern
 tags: [architecture, abapgit, repo-structure, multi-site, abap]
 sap_release: ["S/4HANA 2023 FPS04", "abapGit ≥ 1.130"]
-status: draft
+status: stable
 sources:
   - "[[sources/heinemann-ewm-coding-standards]]"
 related:
@@ -11,7 +11,7 @@ related:
   - "[[concepts/abapgit-serialization]]"
   - "[[topics/abap-quality-gates]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # Multi-Site Repo Architecture (Three-Tier)

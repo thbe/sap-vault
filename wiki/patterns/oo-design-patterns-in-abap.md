@@ -3,7 +3,7 @@ title: "OO Design Patterns in ABAP"
 type: pattern
 tags: [design-patterns, oo, clean-abap, abap]
 sap_release: ["NW 7.40+", "S/4HANA", "BTP ABAP"]
-status: draft
+status: stable
 sources:
   - "[[sources/opencode-abap-context-library]]"
 related:
@@ -11,7 +11,7 @@ related:
   - "[[patterns/test-doubles-and-dependency-injection]]"
   - "[[concepts/abap-exception-handling]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # OO Design Patterns in ABAP

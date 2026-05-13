@@ -3,7 +3,7 @@ title: "Dynamic Code Execution Whitelist"
 type: pattern
 tags: [security, dynamic-code, abap, atc]
 sap_release: ["S/4HANA", "BTP ABAP", "ECC"]
-status: draft
+status: stable
 sources:
   - "[[sources/heinemann-ewm-coding-standards]]"
 related:
@@ -11,7 +11,7 @@ related:
   - "[[concepts/abap-exception-handling]]"
   - "[[topics/abap-quality-gates]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # Dynamic Code Execution Whitelist

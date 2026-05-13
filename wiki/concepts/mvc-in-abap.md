@@ -3,7 +3,7 @@ title: "MVC in ABAP"
 type: concept
 tags: [mvc, design, abap, architecture]
 sap_release: ["S/4HANA", "ECC"]
-status: draft
+status: stable
 sources:
   - "[[sources/sap-development-standard-approach-abap-fiori-v1]]"
   - "[[sources/heinemann-ewm-coding-standards]]"
@@ -12,7 +12,7 @@ related:
   - "[[concepts/restful-application-programming-model]]"
   - "[[patterns/multi-site-repo-architecture]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # MVC in ABAP
@@ -35,7 +35,7 @@ Typical mapping in S/4-era custom development:
 
 | Layer       | Classical ABAP            | Modern S/4 (RAP)                     |
 | ----------- | ------------------------- | ------------------------------------ |
-| Model       | `*_CL_…` business class   | CDS view + behavior definition (BDEF)|
+| Model       | `*_CL_…` business class   | [[concepts/cds-view-entities\|CDS view entity]] + [[concepts/behavior-definition\|behavior definition (BDEF)]] |
 | View        | ALV / Dynpro / SAP GUI    | Fiori Elements + UI5 freestyle       |
 | Controller  | Report / WD app           | RAP service binding + Fiori app      |
 

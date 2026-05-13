@@ -3,15 +3,16 @@ title: "ABAP Unit Testing"
 type: topic
 tags: [testing, abap-unit, quality, clean-abap, abap]
 sap_release: ["S/4HANA", "BTP ABAP", "NW 7.40+"]
-status: draft
+status: stable
 sources:
+  - "[[sources/clean-abap-styleguide]]"
   - "[[sources/opencode-abap-context-library]]"
 related:
   - "[[concepts/clean-abap]]"
   - "[[topics/abap-quality-gates]]"
   - "[[patterns/test-doubles-and-dependency-injection]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # ABAP Unit Testing
@@ -130,11 +131,28 @@ METHOD descriptive_name.
 ENDMETHOD.
 ```
 
-Rules:
+Rules (per [[sources/clean-abap-styleguide]] `#test-methods` chapter):
 
-- **One "When" per test.** If you need two, it's two tests.
-- **Few focused assertions** — when a test fails, you should know exactly what broke.
-- **Descriptive names**: `test_rejects_negative_quantity`, not `test_3` or `test_calculate`.
+- **One "When" per test** (`#when-is-exactly-one-call`). If you need two, it's two tests.
+- **Few focused assertions** (`#few-focused-assertions`) — when a test fails, you should know exactly what broke.
+- **Descriptive names** (`#test-method-names-reflect-whats-given-and-expected`): `test_rejects_negative_quantity`, not `test_3` or `test_calculate`. Method name should reflect both what's *given* and what's *expected*.
+- **Don't add a TEARDOWN unless you really need it** (`#dont-add-a-teardown-unless-you-really-need-it`) — most tests don't.
+
+## Test doubles — design rules
+
+The styleguide is explicit about *how* to inject doubles ([[sources/clean-abap-styleguide]] `#injection`):
+
+- **Use dependency inversion** (`#use-dependency-inversion-to-inject-test-doubles`): inject collaborators via constructor or setter taking an interface, not the concrete class. See [[patterns/test-doubles-and-dependency-injection]].
+- **Use `CL_ABAP_TESTDOUBLE`** (`#consider-to-use-the-tool-abap-test-double`) — generates double of an interface in one line; preferred over hand-coded mocks.
+- **Test seams** (`#use-test-seams-as-temporary-workaround`) are *temporary workarounds* for legacy code that can't be refactored to inject — not a primary tool. Plan to refactor away.
+- **`LOCAL FRIENDS`** (`#use-local-friends-to-access-the-dependency-inverting-constructor`) — let the test class access a `CREATE PRIVATE` class's DI constructor; do **not** misuse `LOCAL FRIENDS` to invade the tested code's internals.
+
+### Anti-patterns from the styleguide
+
+- ❌ **Don't sub-class to mock methods** (`#dont-sub-class-to-mock-methods`). Creating a test sub-class that overrides a method to fake it couples the test to the implementation, defeats `FINAL`, and confuses the inheritance contract. Use a test double of an injected interface instead.
+- ❌ **Don't add features to production code only for testing** (`#dont-add-features-to-production-code-that-are-only-intended-for-use-during-automated-testing`). A "test mode" flag, a getter for an internal table "for the test", a back-door setter — all leak test-only complexity into the production contract. Refactor to inject the dependency cleanly.
+- ❌ **Don't mock stuff that's not needed** (`#dont-mock-stuff-thats-not-needed`). Every mock is a maintenance burden; only mock what the test actually requires to isolate behavior.
+- ❌ **Don't build test frameworks** (`#dont-build-test-frameworks`). ABAP Unit + `CL_ABAP_TESTDOUBLE` is the framework; resist the temptation to wrap them in a project-specific abstraction "for convenience" — it usually obscures more than it helps.
 
 ## Common assertions
 
@@ -188,4 +206,5 @@ See [[topics/abap-quality-gates]]:
 
 ## Sources
 
+- **[[sources/clean-abap-styleguide]]** — `#testing` chapter (full): principles, test-class structure, code-under-test naming (CUT), injection rules, given-when-then, test data, assertions.
 - [[sources/opencode-abap-context-library]] — `abap-testing-patterns.md` (test class skeleton, attributes, fixtures, assertions, RAP testing), `clean-abap-testing.md` (philosophy, anti-patterns).

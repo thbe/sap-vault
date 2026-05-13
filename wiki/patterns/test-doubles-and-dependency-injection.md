@@ -3,7 +3,7 @@ title: "Test Doubles and Dependency Injection"
 type: pattern
 tags: [testing, di, test-doubles, abap-unit, clean-abap, abap]
 sap_release: ["S/4HANA", "BTP ABAP", "NW 7.40+"]
-status: draft
+status: stable
 sources:
   - "[[sources/opencode-abap-context-library]]"
 related:
@@ -11,7 +11,7 @@ related:
   - "[[concepts/clean-abap]]"
   - "[[concepts/abap-exception-handling]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # Test Doubles and Dependency Injection

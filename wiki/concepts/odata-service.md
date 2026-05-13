@@ -3,7 +3,7 @@ title: "OData Service"
 type: concept
 tags: [odata, gateway, rap, fiori, segw, service]
 sap_release: ["S/4HANA", "ECC + Gateway hub", "BTP ABAP"]
-status: draft
+status: stable
 sources:
   - "[[sources/sap-development-standard-approach-abap-fiori-v1]]"
   - "[[sources/opencode-fiori-context-library]]"
@@ -12,7 +12,7 @@ related:
   - "[[concepts/sap-fiori-overview]]"
   - "[[entities/tools/segw]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # OData Service
@@ -55,14 +55,15 @@ updated: 2026-05-11
 - **`$expand`** — for navigation properties; implement `*_GET_EXPANDED_ENTITY(SET)` if performance requires it.
 - **`$select`** — usually handled by Gateway; only implement if column projection materially reduces DB cost.
 
-### Field naming — open question
+### Field naming — policy
 
-> [!warning] Contradiction — OData property naming
-> Two valid conventions in our sources:
-> - **[[sources/opencode-fiori-context-library]]** (`fiori-guidelines.md` §3.2): keep ABAP upper-case names (`MATNR`, `LIFNR`) so DDIC structures map automatically and no hand-coded conversion is needed in `DPC_EXT`.
-> - **[[sources/sap-development-standard-approach-abap-fiori-v1]]** §5.4: use **English semantic UpperCamelCase** names (`MaterialNumber`, `SupplierId`, `FirstName`) to decouple the OData contract from DDIC and present a clean external API.
+> [!info] Resolved policy — split by audience
+> Both conventions in our sources are valid; the policy is to **split by service audience**:
 >
-> Both are defensible. Auto-mapping is faster to develop; semantic names are friendlier for external/partner consumption. **Resolution depends on project policy** — internal-only services often go with auto-mapping; partner-facing or platform services should use semantic names. Confirm and update this page once policy is set.
+> - **Internal services** (consumed only by our own Fiori apps / internal back-ends) → keep ABAP upper-case names (`MATNR`, `LIFNR`) so DDIC structures map automatically and `DPC_EXT` stays glue-only. Source: [[sources/opencode-fiori-context-library]] (`fiori-guidelines.md` §3.2).
+> - **Partner-facing or platform services** (external consumers, published catalogues, cross-org integration) → use **English semantic UpperCamelCase** (`MaterialNumber`, `SupplierId`, `FirstName`) to decouple the OData contract from DDIC and present a clean external API. Source: [[sources/sap-development-standard-approach-abap-fiori-v1]] §5.4.
+>
+> Decide audience at service-design time and document it on the service registration. Don't mix conventions inside one service.
 
 ### Other SEGW rules
 
@@ -92,12 +93,14 @@ Verify before UI integration:
 
 CDS view + Behavior Definition + Service Definition + Service Binding produce an OData service without DPC/MPC plumbing. See [[concepts/restful-application-programming-model]], [[concepts/cds-view-entities]], [[concepts/behavior-definition]] for the mechanics.
 
-## Open topics
+## Documented future work
 
-- Detailed RAP service-binding workflow (V2 vs V4).
-- OData V4 trade-offs vs V2 (capabilities, draft handling, batch).
-- Authentication / CORS / CSRF on BTP vs on-prem.
-- `$batch` request handling in DPC_EXT.
+The following are out of scope for this page and tracked as future ingest targets — page is stable as-is, these will land in dedicated pages or expansions when sources are ingested:
+
+- Detailed RAP service-binding workflow (V2 vs V4) — *(future)* extension to [[concepts/restful-application-programming-model]].
+- OData V4 trade-offs vs V2 (capabilities, draft handling, batch) — *(future)* dedicated topic page.
+- Authentication / CORS / CSRF on BTP vs on-prem — *(future)* dedicated security topic.
+- `$batch` request handling in DPC_EXT — *(future)* expansion to the SEGW workflow above.
 
 ## Sources
 

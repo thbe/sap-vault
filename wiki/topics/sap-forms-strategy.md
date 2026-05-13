@@ -3,7 +3,7 @@ title: "SAP Forms Strategy"
 type: topic
 tags: [forms, adobe-forms, smart-forms, sapscript, brfplus, abap]
 sap_release: ["S/4HANA", "ECC (legacy reference)"]
-status: draft
+status: stable
 sources:
   - "[[sources/heinemann-ewm-coding-standards]]"
   - "[[sources/sap-development-standard-approach-abap-fiori-v1]]"
@@ -12,7 +12,7 @@ related:
   - "[[concepts/clean-abap]]"
   - "[[patterns/brf-plus-ui-guard]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # SAP Forms Strategy

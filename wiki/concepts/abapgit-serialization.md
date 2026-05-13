@@ -3,7 +3,7 @@ title: "abapGit Serialization"
 type: concept
 tags: [abapgit, git, serialization, packaging, abap]
 sap_release: ["S/4HANA 2023 FPS04", "abapGit ≥ 1.130"]
-status: draft
+status: stable
 sources:
   - "[[sources/heinemann-ewm-coding-standards]]"
   - "[[sources/opencode-abap-context-library]]"
@@ -12,7 +12,7 @@ related:
   - "[[patterns/multi-site-repo-architecture]]"
   - "[[topics/abap-quality-gates]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # abapGit Serialization

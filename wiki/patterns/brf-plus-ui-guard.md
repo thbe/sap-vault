@@ -3,14 +3,14 @@ title: "BRF+ UI Guard"
 type: pattern
 tags: [brfplus, security, governance, custom-framework, abap]
 sap_release: ["S/4HANA (S4CORE 104+)"]
-status: draft
+status: stable
 sources:
   - "[[sources/sap-development-standard-approach-abap-fiori-v1]]"
   - "[[sources/opencode-abap-context-library]]"
 related:
   - "[[concepts/abap-naming-conventions]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # BRF+ UI Guard

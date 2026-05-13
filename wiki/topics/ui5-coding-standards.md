@@ -3,7 +3,7 @@ title: "UI5 Coding Standards"
 type: topic
 tags: [ui5, fiori, javascript, coding-standards, anti-patterns]
 sap_release: ["UI5 1.x freestyle", "S/4HANA FES embedded"]
-status: draft
+status: stable
 sources:
   - "[[sources/opencode-fiori-context-library]]"
   - "[[sources/sap-development-standard-approach-abap-fiori-v1]]"
@@ -12,7 +12,7 @@ related:
   - "[[topics/ui5-css-guidelines]]"
   - "[[snippets/ui5-controller-template]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # UI5 Coding Standards

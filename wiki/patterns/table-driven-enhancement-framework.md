@@ -3,7 +3,7 @@ title: "Table-Driven Enhancement Framework"
 type: pattern
 tags: [enhancement, badi, governance, custom-framework, abap]
 sap_release: ["S/4HANA (Heinemann project)", "ECC (compatible)"]
-status: draft
+status: stable
 sources:
   - "[[sources/sap-development-standard-approach-abap-fiori-v1]]"
   - "[[sources/opencode-abap-context-library]]"
@@ -11,7 +11,7 @@ related:
   - "[[concepts/abap-naming-conventions]]"
   - "[[topics/abap-quality-gates]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # Table-Driven Enhancement Framework

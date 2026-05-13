@@ -3,7 +3,7 @@ title: "ABAP Security Checklist"
 type: topic
 tags: [security, atc, audit, governance, abap]
 sap_release: ["S/4HANA", "ECC", "BTP ABAP"]
-status: draft
+status: stable
 sources:
   - "[[sources/heinemann-ewm-coding-standards]]"
 related:
@@ -11,7 +11,7 @@ related:
   - "[[patterns/dynamic-code-whitelist]]"
   - "[[concepts/abap-exception-handling]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # ABAP Security Checklist

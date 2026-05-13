@@ -3,7 +3,7 @@ title: "UI5 CSS Guidelines"
 type: topic
 tags: [ui5, fiori, css, bem, theming, styling]
 sap_release: ["UI5 1.x freestyle", "S/4HANA FES embedded"]
-status: draft
+status: stable
 sources:
   - "[[sources/opencode-fiori-context-library]]"
   - "[[sources/sap-development-standard-approach-abap-fiori-v1]]"
@@ -11,7 +11,7 @@ related:
   - "[[concepts/sap-fiori-overview]]"
   - "[[topics/ui5-coding-standards]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # UI5 CSS Guidelines

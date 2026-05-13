@@ -3,8 +3,9 @@ title: "ABAP Exception Handling"
 type: concept
 tags: [exceptions, error-handling, clean-abap, oo, abap]
 sap_release: ["S/4HANA", "BTP ABAP", "NetWeaver 7.40+"]
-status: draft
+status: stable
 sources:
+  - "[[sources/clean-abap-styleguide]]"
   - "[[sources/heinemann-ewm-coding-standards]]"
   - "[[sources/sap-development-standard-approach-abap-fiori-v1]]"
   - "[[sources/opencode-abap-context-library]]"
@@ -13,7 +14,7 @@ related:
   - "[[topics/abap-security-checklist]]"
   - "[[topics/abap-quality-gates]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # ABAP Exception Handling
@@ -152,7 +153,27 @@ ABAP's three exception parents differ only in how the compiler and runtime treat
 | `CX_DYNAMIC_CHECK` | Required               | Yes (runtime panic if not) | Programmer-detectable errors (precondition violations) |
 | `CX_NO_CHECK`      | **Forbidden**          | No                 | System errors; **resumable** RF-dialog patterns  |
 
-**Rule of thumb**: pick `CX_STATIC_CHECK` unless you have a specific reason. It pushes error handling into the type system and prevents silent omissions.
+**Rule of thumb**: pick `CX_STATIC_CHECK` unless you have a specific reason. It pushes error handling into the type system and prevents silent omissions. The official Clean ABAP styleguide ([[sources/clean-abap-styleguide]] §`#throw-cx_static_check-for-manageable-exceptions`) is unambiguous on this default.
+
+### When to deviate from `CX_STATIC_CHECK`
+
+Per the styleguide:
+
+- **`CX_NO_CHECK`** — *unrecoverable* situations: programming errors that cannot reasonably be fixed at runtime; system-level failures the caller cannot meaningfully react to. Resumable RF-dialog flows are the canonical exception (see template above).
+- **`CX_DYNAMIC_CHECK`** — *avoidable* errors: precondition violations the caller could have prevented by checking first (e.g. converting a string to a number that may not be numeric). Compiler does not enforce `RAISING`, but the type system still warns at runtime.
+- **`CX_STATIC_CHECK`** — everything else. Recoverable business/domain errors are this category by default.
+
+### Wrap foreign exceptions
+
+Per the styleguide (`#wrap-foreign-exceptions-instead-of-letting-them-invade-your-code`): when calling a foreign API (SAP standard, third-party class, lower architecture layer), catch its exception type and re-raise as your own project exception. This prevents the foreign type from spreading through your code and breaking encapsulation.
+
+```abap
+TRY.
+    cl_external_api=>do_thing( ).
+  CATCH cx_external_failure INTO DATA(lx_ext).
+    RAISE EXCEPTION NEW ycx_otc_general_error( previous = lx_ext ).
+ENDTRY.
+```
 
 ## Preferred `RAISE` syntax (NW 7.52+)
 
@@ -173,6 +194,7 @@ RAISE EXCEPTION TYPE ycx_otc_order_invalid
 
 ## Sources
 
+- **[[sources/clean-abap-styleguide]]** — `#exceptions` chapter: CX_*_CHECK selection rationale, `RAISE EXCEPTION NEW`, wrap-foreign-exceptions, sub-classes for distinguishing error situations.
 - [[sources/heinemann-ewm-coding-standards]] — `03-code-quality-performance.md` §7 (Error Handling & Robustness).
 - [[sources/sap-development-standard-approach-abap-fiori-v1]] — Ch 2 (Quality), §3.7 (OO).
 - [[sources/opencode-abap-context-library]] — `clean-abap-essentials.md` (CX hierarchy decision rules), `modern-abap-patterns.md` (`RAISE EXCEPTION NEW`).

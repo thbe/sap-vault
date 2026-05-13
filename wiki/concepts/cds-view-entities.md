@@ -3,7 +3,7 @@ title: "CDS View Entities"
 type: concept
 tags: [cds, rap, data-model, abap, s4hana, btp-abap]
 sap_release: ["S/4HANA 1909+", "BTP ABAP", "NW 7.55+ (view entities)"]
-status: draft
+status: stable
 sources:
   - "[[sources/opencode-abap-context-library]]"
 related:
@@ -12,7 +12,7 @@ related:
   - "[[concepts/eml]]"
   - "[[concepts/odata-service]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # CDS View Entities

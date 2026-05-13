@@ -3,7 +3,7 @@ title: "ABAP Naming Conventions"
 type: concept
 tags: [naming-conventions, governance, clean-abap, abap]
 sap_release: ["S/4HANA 2023 FPS04", "S/4HANA (project standard)", "ECC (legacy reference)"]
-status: draft
+status: stable
 sources:
   - "[[sources/sap-development-standard-approach-abap-fiori-v1]]"
   - "[[sources/heinemann-ewm-coding-standards]]"
@@ -14,7 +14,7 @@ related:
   - "[[patterns/multi-site-repo-architecture]]"
   - "[[entities/tools/atc]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # ABAP Naming Conventions

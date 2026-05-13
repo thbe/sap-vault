@@ -3,7 +3,7 @@ title: "SAP Fiori Overview"
 type: concept
 tags: [fiori, ui5, frontend, s4hana]
 sap_release: ["S/4HANA (FES embedded or hub)", "BTP"]
-status: draft
+status: stable
 sources:
   - "[[sources/sap-development-standard-approach-abap-fiori-v1]]"
   - "[[sources/opencode-fiori-context-library]]"
@@ -14,7 +14,7 @@ related:
   - "[[topics/ui5-css-guidelines]]"
   - "[[snippets/ui5-controller-template]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # SAP Fiori Overview

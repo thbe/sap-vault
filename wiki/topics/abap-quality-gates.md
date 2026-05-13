@@ -3,7 +3,7 @@ title: "ABAP Quality Gates"
 type: topic
 tags: [quality, atc, code-inspector, governance, abap]
 sap_release: ["S/4HANA", "BTP ABAP", "NetWeaver 7.40+"]
-status: draft
+status: stable
 sources:
   - "[[sources/sap-development-standard-approach-abap-fiori-v1]]"
   - "[[sources/heinemann-ewm-coding-standards]]"
@@ -17,7 +17,7 @@ related:
   - "[[patterns/dynamic-code-whitelist]]"
   - "[[patterns/form-to-method-refactor]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # ABAP Quality Gates

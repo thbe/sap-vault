@@ -3,7 +3,7 @@ title: "ABAP Performance"
 type: topic
 tags: [performance, abap, database, internal-tables]
 sap_release: ["S/4HANA", "ECC", "BTP ABAP"]
-status: draft
+status: stable
 sources:
   - "[[sources/sap-development-standard-approach-abap-fiori-v1]]"
   - "[[sources/heinemann-ewm-coding-standards]]"
@@ -13,7 +13,7 @@ related:
   - "[[topics/abap-quality-gates]]"
   - "[[patterns/multi-site-repo-architecture]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # ABAP Performance

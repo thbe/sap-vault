@@ -3,7 +3,7 @@ title: "RESTful Application Programming Model (RAP)"
 type: concept
 tags: [rap, abap, s4hana, btp-abap, cds, odata]
 sap_release: ["S/4HANA 1909+", "BTP ABAP"]
-status: draft
+status: stable
 sources:
   - "[[sources/opencode-abap-context-library]]"
 related:
@@ -16,7 +16,7 @@ related:
   - "[[concepts/sap-fiori-overview]]"
   - "[[topics/abap-unit-testing]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # RESTful Application Programming Model (RAP)
@@ -63,6 +63,81 @@ RAP replaces the legacy SEGW/Gateway stack ([[concepts/odata-service]] / [[entit
 ```
 
 Every layer is a transportable repository object (CDS = DDLS, BDL = BDEF, projection = DDLX/BDEF, service definition = SRVD, service binding = SRVB, behavior implementation = CLAS).
+
+## Service-binding workflow
+
+End-to-end recipe taking a CDS root entity to a callable OData endpoint. Order matters — each step depends on the previous being activated.
+
+### 1. Build the data model
+1. Root CDS view entity (`define root view entity ...`) over the persistent table or an existing CDS composition tree.
+2. Child CDS view entities if the root is a composition.
+3. Activate. ADT marks them with the *RAP root* / *RAP child* badge once a BDEF references them.
+
+### 2. Define behavior
+1. Create the **Behavior Definition** (`yotc_i_order.bdef`) with header `managed | unmanaged | abstract implementation in class zbp_<root> unique;` and `strict ( 2 );`.
+2. Declare CRUDQ operations, fields, locking, authorisation, ETag, determinations, validations, actions.
+3. Activate the BDEF — ADT auto-generates the **behavior implementation class skeleton** (`zbp_<root>`) and its local handler classes (`lhc_<entity>`) on first activation.
+4. Implement the `lhc_*` handler methods for any non-managed concerns (validations, determinations, actions, custom save for `managed with additional save`, full CUD for `unmanaged`).
+
+### 3. Add the projection layer
+1. Create a **CDS Projection View** (`yotc_c_order.ddls`, `define root view entity ... as projection on YOTC_I_Order { ... }`) — exposes only the fields and associations the service consumer should see, applies UI annotations (`@UI.lineItem`, `@UI.identification`, etc.) here rather than on the root.
+2. Create a **Projection Behavior Definition** (`yotc_c_order.bdef`, header `projection;`) — selects which BDEF operations to expose, optionally adds `use draft;` to enable draft handling.
+3. Activate both.
+
+### 4. Define the service
+1. Create a **Service Definition** (`yotc_o4_order.srvd`):
+   ```cds
+   @EndUserText.label: 'Sales Order Service'
+   define service YOTC_O4_Order {
+     expose YOTC_C_Order as Order;
+   }
+   ```
+2. Activate. The service is now defined but has no protocol binding yet.
+
+### 5. Bind the service
+1. Create a **Service Binding** (`yotc_o4_order_v4ui.srvb`) referencing the service definition. ADT prompts for:
+   - **Binding Type**: `OData V4 - UI` (Fiori Elements V4) | `OData V4 - API` (programmatic / partner) | `OData V2 - UI` (Fiori Elements V2 / RAP-V2 fallback) | `InA - UI Service` (analytical).
+   - **Category**: usually inferred from binding type.
+2. Activate. Activation triggers metadata generation; errors here usually mean missing UI annotations or mismatched cardinality on the projection.
+3. Click **Publish** (BTP ABAP) / *Local Service Endpoint* opens automatically (on-prem) — the binding now has a runnable URL.
+
+### 6. Test the binding
+- ADT *Service Binding Editor* shows the metadata document, entity sets, and a *Preview* button:
+  - **OData V4 UI** → opens Fiori Elements preview with auto-generated List Report / Object Page.
+  - **OData V4/V2 API** → opens browser-based service explorer (`$metadata`, GET on entity sets, `$batch` form).
+- For programmatic clients use the URL shown in the binding header (`/sap/opu/odata4/sap/<srvname>/srvd_a2x/sap/<srvname>/0001/`).
+- For BTP ABAP, additionally publish via a **Communication Scenario** (`SAP Communication Management` app) and create a **Communication Arrangement** so external clients can authenticate.
+
+### 7. Wire up to consumption
+- **Fiori Elements V4 app** → reference the published binding URL in the manifest's `dataSources` and instantiate a List Report / Object Page floorplan; UI annotations on the projection drive the layout (no UI5 controller code for the standard flows).
+- **Custom UI5 app** → `sap.ui.model.odata.v4.ODataModel` pointing at the binding URL.
+- **Server-to-server** → standard OData V4 client (e.g., SAP Cloud SDK, plain HTTP).
+
+### Activation dependency graph
+
+```
+DB table / CDS source
+       ↓
+Root + child CDS view entities  (DDLS)
+       ↓
+Behavior Definition  (BDEF)              ──→  Behavior Implementation  (CLAS, lhc_*)
+       ↓
+Projection CDS view  (DDLS)
+       ↓
+Projection BDL  (BDEF, "projection;")
+       ↓
+Service Definition  (SRVD)
+       ↓
+Service Binding  (SRVB)  ──→  OData $metadata  ──→  consumer
+```
+
+A change to a lower layer requires re-activation upward. ADT's *Activate Inactive Objects* dialog usually orders this correctly; manual ordering matters when activating across packages.
+
+> [!tip] Common activation errors
+> - *"Behavior implementation class does not exist"* — activate the BDEF once to auto-generate the skeleton, then re-activate.
+> - *"Field X is exposed in projection but not in root behavior"* — add `field ( ... ) X;` to the root BDEF.
+> - *"Annotation @UI.lineItem requires position"* — UI annotations belong on the projection view, not the root.
+> - *"Service binding cannot be published"* on BTP ABAP — check the linked communication scenario release status.
 
 ## Code example — minimal managed scenario
 

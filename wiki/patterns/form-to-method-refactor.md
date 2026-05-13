@@ -3,7 +3,7 @@ title: "FORM → Method Refactor"
 type: pattern
 tags: [refactoring, clean-abap, form, oo, technical-debt, abap]
 sap_release: ["S/4HANA", "BTP ABAP (mandatory)", "NetWeaver 7.40+"]
-status: draft
+status: stable
 sources:
   - "[[sources/heinemann-ewm-coding-standards]]"
 related:
@@ -11,7 +11,7 @@ related:
   - "[[concepts/abap-exception-handling]]"
   - "[[topics/abap-performance]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # FORM → Method Refactor

@@ -3,7 +3,7 @@ title: "EML (Entity Manipulation Language)"
 type: concept
 tags: [rap, eml, abap, s4hana, btp-abap]
 sap_release: ["S/4HANA 1909+", "BTP ABAP"]
-status: draft
+status: stable
 sources:
   - "[[sources/opencode-abap-context-library]]"
 related:
@@ -12,7 +12,7 @@ related:
   - "[[concepts/behavior-definition]]"
   - "[[topics/abap-unit-testing]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # EML (Entity Manipulation Language)

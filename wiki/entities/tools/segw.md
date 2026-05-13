@@ -5,7 +5,7 @@ entity_kind: tool
 sap_object_name: "SEGW"
 tags: [tool, gateway, odata, legacy]
 sap_release: ["NetWeaver 7.40+", "S/4HANA (still available, not preferred for new dev)"]
-status: draft
+status: stub
 sources:
   - "[[sources/sap-development-standard-approach-abap-fiori-v1]]"
   - "[[sources/opencode-fiori-context-library]]"
@@ -13,7 +13,7 @@ related:
   - "[[concepts/odata-service]]"
   - "[[concepts/restful-application-programming-model]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # SEGW (SAP Gateway Service Builder)
@@ -22,7 +22,9 @@ updated: 2026-05-11
 
 ## Status
 
-**Draft.** Documented in [[sources/sap-development-standard-approach-abap-fiori-v1]] and [[sources/opencode-fiori-context-library]]. Marked legacy because **RAP service bindings are the preferred model on modern S/4HANA / BTP ABAP**. See [[concepts/odata-service]] for the full implementation workflow including DPC_EXT method details and `$filter`/`$top`/`$skip` handling.
+**Stub — pointer page.** This entry exists so SEGW resolves as an entity from other pages. The substantive workflow content lives on [[concepts/odata-service]] (DPC_EXT methods, `$filter`/`$top`/`$skip` handling, testing). Marked legacy because **RAP service bindings are the preferred model on modern S/4HANA / BTP ABAP**.
+
+To expand beyond stub: MPC vs DPC class structure, generated artefact lifecycle (regeneration vs activation), `*_DPC_EXT` redefinition mechanics, common transactions cross-reference.
 
 ## Key points (from existing source)
 

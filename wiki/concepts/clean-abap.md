@@ -3,8 +3,9 @@ title: "Clean ABAP"
 type: concept
 tags: [clean-abap, abap, quality, oo]
 sap_release: ["S/4HANA 2020+", "BTP ABAP", "NetWeaver 7.50+ (subset)"]
-status: draft
+status: stable
 sources:
+  - "[[sources/clean-abap-styleguide]]"
   - "[[sources/sap-development-standard-approach-abap-fiori-v1]]"
   - "[[sources/heinemann-ewm-coding-standards]]"
   - "[[sources/opencode-abap-context-library]]"
@@ -17,7 +18,7 @@ related:
   - "[[topics/abap-performance]]"
   - "[[topics/abap-quality-gates]]"
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-05-13
 ---
 
 # Clean ABAP
@@ -89,6 +90,10 @@ ENDCLASS.
 - [[concepts/restful-application-programming-model]]
 - [[topics/abap-performance]]
 - [[topics/abap-quality-gates]]
+- [[topics/abap-formatting]] — formatting rules from the official styleguide.
+- [[patterns/clean-abap-idioms]] — small-rule cheatsheet (tables, booleans, conditions, control flow).
+- [[entities/tools/code-pal-for-abap]] — automated Clean ABAP enforcement via SCI/ATC.
+- [[entities/tools/abaplint]] — open-source check tool, runs on abapGit-serialized code without SAP system.
 
 ## Anti-patterns / pitfalls
 
@@ -127,12 +132,55 @@ Clean ABAP picks the exception parent based on contract semantics — see [[conc
 | `CX_DYNAMIC_CHECK` | Compiler does not enforce; runtime panics if uncaught      | Programmer errors detected at runtime    |
 | `CX_NO_CHECK`      | Never declared in `RAISING`; can be `RESUMABLE`            | System errors, RF-dialog resumable flows |
 
-> [!warning] Hungarian notation tension
-> The official SAP Clean ABAP styleguide **forbids** Hungarian prefixes (`lv_`, `lt_`, `lo_`, `ls_`). The Heinemann project standards and `quick-ref.md` in [[sources/opencode-abap-context-library]] **prescribe** them. Same tension is captured in [[concepts/abap-naming-conventions]]. Resolution: follow the project standard for the codebase you are working in; do not retrofit either way mid-flight.
+> [!info] Hungarian notation: official baseline vs project deviation
+> The **official** SAP Clean ABAP styleguide ([[sources/clean-abap-styleguide]] §`#avoid-encodings-esp-hungarian-notation-and-prefixes`) **forbids** Hungarian prefixes (`lv_`, `lt_`, `lo_`, `ls_`, `iv_`, `rv_`). This is the primary-source baseline.
+>
+> The Heinemann project standards and `quick-ref.md` in [[sources/opencode-abap-context-library]] **prescribe** them as a project-local deviation, predating broad Clean ABAP adoption. Both regimes are internally consistent; mixing them inside a single codebase is not. Same tension is captured in [[concepts/abap-naming-conventions]].
+>
+> **Rule**: follow the project standard for the codebase you are working in; do not retrofit either way mid-flight. New greenfield projects should default to the official styleguide (no Hungarian).
+
+## Constants — prefer `ENUM`
+
+Since NW 7.51, native ABAP enumerations replace the legacy "constants interface" pattern:
+
+```abap
+" preferred (NW 7.51+)
+CLASS yotc_message_severity DEFINITION PUBLIC ABSTRACT FINAL.
+  PUBLIC SECTION.
+    TYPES: BEGIN OF ENUM type,
+             warning,
+             error,
+           END OF ENUM type.
+ENDCLASS.
+
+" anti-pattern (mixes unrelated values, suggests "implementing" constants)
+INTERFACE ycommon_constants.
+  CONSTANTS: warning      TYPE symsgty VALUE 'W',
+             transitional TYPE i       VALUE 1,
+             error        TYPE symsgty VALUE 'E',
+             persisted    TYPE i       VALUE 2.
+ENDINTERFACE.
+```
+
+When `ENUM` is unavailable (older releases or when you need the value mapped to a specific domain code), **group constants** in a `BEGIN OF … END OF …` block — see [[patterns/clean-abap-idioms]] for the grouped-constants pattern.
+
+> [!info] Available since
+> `TYPES: BEGIN OF ENUM` — NetWeaver **7.51**.
+
+## How to adopt — four-step plan
+
+For teams transitioning from legacy ABAP, the official styleguide ([[sources/clean-abap-styleguide]] §`#how-to-refactor-legacy-code`) prescribes:
+
+1. **Get the team aboard** — communicate the new style; agree on a small undisputed subset before broader rollout.
+2. **Boy-scout rule** — leave the code you edit a little cleaner than you found it. Don't sink hours into "cleaning the campsite"; let improvements accumulate.
+3. **Build clean islands** — periodically pick a small object/component and make it clean in all aspects. These become demonstration cases and tested home bases for further refactoring.
+4. **Talk about it** — code reviews, info sessions, discussion forums. Share experiences to grow shared understanding.
+
+**Easiest starting points** (per the styleguide): [Booleans], [Conditions], [Ifs], [Methods] (especially "Do one thing" and "Keep methods small"). **Last** (most contentious): [Comments], [Names], [Formatting] — tackle these only after the team has felt Clean ABAP's positive effects.
 
 ## Sources
 
-- [[sources/sap-development-standard-approach-abap-fiori-v1]] — §2.3, §2.4, §2.5, §3.5, §3.7.
-- [[sources/heinemann-ewm-coding-standards]] — `02-coding-guidelines.md` (FORMs, exceptions, dynamic code), `03-code-quality-performance.md` (modularization, ABAP doc).
+- **[[sources/clean-abap-styleguide]]** — primary, SAP-official source. The whole guide. Anchors every other source on this page.
+- [[sources/sap-development-standard-approach-abap-fiori-v1]] — §2.3, §2.4, §2.5, §3.5, §3.7. Project-level interpretation, predates broad Clean ABAP adoption.
+- [[sources/heinemann-ewm-coding-standards]] — `02-coding-guidelines.md` (FORMs, exceptions, dynamic code), `03-code-quality-performance.md` (modularization, ABAP doc). Project deviation: prescribes Hungarian notation.
 - [[sources/opencode-abap-context-library]] — `clean-abap-essentials.md` (FINAL/CREATE PRIVATE, exception hierarchy, Hungarian-notation stance), `modern-abap-patterns.md`.
-- *(future)* SAP Clean ABAP styleguide on GitHub — to be ingested.
