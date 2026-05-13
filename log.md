@@ -168,3 +168,19 @@
   - Hungarian-notation tension on [[wiki/concepts/abap-naming-conventions]] not touched this ingest — should be reframed similarly to `clean-abap` (official baseline vs project deviation) in a future pass.
   - Re-fetch styleguide every 6-12 months (community-maintained `main` branch).
   - Remaining queued sources for human-gated batch (B): #2 abapGit official docs, #3 SAP RAP development guide, #4 SAP-samples/abap-cheat-sheets.
+
+---
+
+## [2026-05-13] lint | Post-merge consistency check
+
+- Merged remote `index.md` → `_Index.md` rename with local 16-modified + 12-new session work; commit `ed24874`.
+- Lint scope: page-count, index sync, broken wikilinks, frontmatter completeness, unresolved contradictions.
+- Findings:
+  - **Index sync**: 51 files in `wiki/` ↔ 51 entries in `_Index.md` — fully consistent.
+  - **Broken wikilinks**: 0 (initial 2 false positives in `mvc-in-abap.md` were valid `[[…\|alias]]` table-cell escapes).
+  - **Frontmatter**: all pages have required fields per AGENTS.md §3.1 (initial false positives — linter checked `head -20` and missed lines 20+; also conflated `sap_release` vs source-page `sap_release_discussed`).
+  - **Contradictions**: 4 callouts present, **all already resolved** in their own callouts (Y/Z scope → resolved in favor of EWM; OData property naming → resolved via split-by-audience policy on `concepts/odata-service`; Hungarian on `clean-abap` → resolved as official baseline vs project deviation).
+  - **Real fix**: `_Index.md` header said "50 pages", actual is 51 (`sources/clean-abap-styleguide` not counted in prior session tally). Fixed.
+- Pages updated: [[_Index.md]] (header page-count 50 → 51).
+- Pages created: (none)
+- Follow-ups: none new. Vault is clean and internally consistent.

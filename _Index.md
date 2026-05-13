@@ -1,6 +1,6 @@
 # Wiki Index
 
-_Last updated: 2026-05-13 · 50 pages_
+_Last updated: 2026-05-13 · 51 pages_
 
 > Catalog of every page in `wiki/`. Maintained by the LLM. Grouped by category.
 > Format: `- [[path/to/page|Title]] — one-line summary [status]`
